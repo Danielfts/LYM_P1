@@ -56,7 +56,7 @@ SKIP:
 	| "\n"
 }
 
-TOKEN: /* Nombres de Comandos */
+TOKEN: /* Nombres de Comandos de bajo nivel*/
 {
 
 			<MOV:  "Mov">
@@ -69,7 +69,7 @@ TOKEN: /* Nombres de Comandos */
 
 }
 
-TOKEN:
+TOKEN: /* Nombres de objetos de bajo nivel*/
 {
 		<BALLOONS:  "BALLOONS" >
 		|	<CHIPS:     "CHIPS"  >	
@@ -78,7 +78,7 @@ TOKEN:
 
 
 
-TOKEN :
+TOKEN : /*Definición de un entero*/
 {
 		<NUM: (<DIGIT>)+ >
 		|  	<#DIGIT: ["0"-"9"] >
@@ -87,14 +87,18 @@ TOKEN :
 
 
 
-	//boolean command(uniandes.lym.robot.view.Console sistema) :
-	boolean command(Console sistema):
+/* Que rayos es esto profe */
+//boolean command(uniandes.lym.robot.view.Console sistema) :
+boolean command(Console sistema):
 	{	
 		
 		int x,y;
 		salida=new String();	
 	}
 
+/* Reglas de producción???*/
+/* '|' son or's */
+/* PREGUNAR POR ESTA VAINA world.turnRight();salida = "Command: Turnright"; */
 	
 	{
 		(		  (
@@ -131,7 +135,7 @@ TOKEN :
 
 	}
 
-	void get() :
+void get() :
 	{
 		int f=1;	
 	}
@@ -169,4 +173,31 @@ TOKEN :
 		}
 	}
 
+/*
+
+TOKEN:
+{
+	< #MAY: ["A"-"B"] >
+|   < #MIN: ["a"-"b"]>
+| 	< #NUM: ["0" -"9"]>
+| 	< NAME: (<MAY>|<MIN>)+ (<MAY>|<MIN>|<NUM>)*>
+}
+
+TOKEN:
+{
+	< FACING: "facing">
+|	< GOTO: "goto">
+| 	< MOVE: "move">
+| 	< TURN: "turn">
+| 	< FACE: "face">
+| 	< PUT: "put">
+| 	< PICK: "pick">
+| 	< MOVETOTHE: "movetothe">
+| 	< MOVEINDIR: "moveindir">
+| 	< JUMPOTOTHE: "jumptothe">
+| 	< JUMPINDI: "jumpindir">
+| 	< NOP: "nop">  	
 	
+}
+
+*/

@@ -22,7 +22,8 @@ public class Robot implements RobotConstants {
 
         String salida=new String();
 
-        //boolean command(uniandes.lym.robot.view.Console sistema) :
+/* Que rayos es esto profe */
+//boolean command(uniandes.lym.robot.view.Console sistema) :
   final public boolean command(Console sistema) throws ParseException {
                 int x,y;
                 salida=new String();
