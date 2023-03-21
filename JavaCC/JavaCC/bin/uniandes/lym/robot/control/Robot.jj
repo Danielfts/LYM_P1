@@ -173,7 +173,7 @@ void get() :
 		}
 	}
 
-/*
+/*TOKENS DE LENGUAJE DE ALTO NIVEL */
 
 TOKEN:
 {
@@ -181,11 +181,25 @@ TOKEN:
 |   < #MIN: ["a"-"b"]>
 | 	< #NUM: ["0" -"9"]>
 | 	< NAME: (<MAY>|<MIN>)+ (<MAY>|<MIN>|<NUM>)*>
+| 	< NUMS: (< NUM >)+>
 }
 
+/* CONDICIONES*/
 TOKEN:
 {
 	< FACING: "facing">
+| 	< CANPUT: "canput">
+| 	< CANPICK: "canpick" >
+| 	< CANMOVEINDIR: "canmoveindir" >
+| 	< CANJUMPINDIR: "canjumpindir" >
+| 	< CANMOVETOTHE: "canmovetothe" >
+| 	< CANJUMPTOTHE: "canjumptothe" >
+| 	< NOT:	"not" >
+}
+/*COMANDOS*/
+TOKEN:
+{
+  	< ASSIGNTO: "assignto" >
 |	< GOTO: "goto">
 | 	< MOVE: "move">
 | 	< TURN: "turn">
@@ -194,10 +208,255 @@ TOKEN:
 | 	< PICK: "pick">
 | 	< MOVETOTHE: "movetothe">
 | 	< MOVEINDIR: "moveindir">
-| 	< JUMPOTOTHE: "jumptothe">
-| 	< JUMPINDI: "jumpindir">
-| 	< NOP: "nop">  	
+| 	< JUMPTOTHE: "jumptothe">
+| 	< JUMPINDIR: "jumpindir">
+| 	< NOP: "nop" >
+}
+
+/*CONTROL*/
+TOKEN:
+{
+ 	< IF: "if" >
+| 	< THEN: "then" >
+| 	< ELSE: "else" >
+| 	< WHILE: "while" >
+| 	< DO: "do" >
+| 	< REPEAT: "repeat" >
+}
+
+TOKEN:
+{
+ 	< FRONT: "front" >
+| 	< RIGHT: "right" >
+| 	< LEFT: "left" >
+| 	< BACK: "back" >
+| 	< NORTH: "north" >
+| 	< SOUTH: "south" >
+| 	< EAST: "east">
+|	< WEST: " west" >
+| 	< AROUND: "around">
+}
+
+TOKEN:
+{
+  	<  BALLOONS:"balloons" >
+  	< CHIPS: "chips"> 
+}
+
+void x ():
+{}
+{
+	(< NAME >|< NUMS >)
+}
+
+void s ():
+{}
+{
+	"ROBOT_R" body()
+}
+
+void body ():
+{}
+{
+  vars() procs() blocks()
+}
+
+void vars ():
+{ }
+{
+	"VARS" < NAME >(","< NAME >)* 
+}
+
+void procs ():
+{ }
+{
+	"PROCS" definition()
+}
+
+void definition():
+{}
+{
+  "[" "|" params() "|" instructions() "]"
+}
+
+void params ():
+{ }
+{
+	< NAME >(","< NAME >)* 
+}
+
+void instructions ():
+{ }
+{
+	(command()|control()|call())(";"(command()|control()|call())*)
+}
+
+void blocks ():
+{ }
+{
+	"[" instructions() "]"
+}
+
+/*COMANDOS*/
+void command ():
+{ }
+{
+	< ASSIGNTO>":"< NUMS >, < NAME >
+}
+
+void assignto ():
+{ }
+{
+ 	< ASSIGNTO > ":" < NUMS > "," < NAME >
+}
+void goto ():
+{ }
+{
+ 	< GOTO > ":" 
+}
+void put ():
+{ }
+{
+  
+}
+void pick ():
+{ }
+{
+  
+}
+void movetothe ():
+{ }
+{
+  
+}
+void moveindir ():
+{ }
+{
+  
+}
+void jumptothe ():
+{ }
+{
+  
+}
+void jumpindir ():
+{ }
+{
+  
+}
+void move ():
+{ }
+{
+  
+}
+void turn ():
+{ }
+{
+  
+}
+void face ():
+{ }
+{
+  
+}
+void nope ():
+{ }
+{
+  
+}
+
+
+/*CONTROL*/
+void control ():
+{ }
+{
+	conditional() | loop() | repeat()
+}
+
+/*CONDICIONALES*/
+void conditional ():
+{ }
+{
+	< IF > ":" 
+}
+
+void condition ()
+{}
+{
+	facing()
+|	canput()
+|	canpick()
+|	canmoveindir()
+|	canjumpindir()
+|	canmovetothe()
+|	canjumptothe()
+|	not()
+}
+
+void facing ()
+{}
+{
+	<FACING> ":" (<NORTH>|<SOUTH>|<EAST>|<WEST>)	
+}
+
+void canput()
+{}
+{
+	<CANPUT> ":" <NAME> "," (<BALOONS> | <CHIPS>)	
+}
+
+void canpick()
+{}
+{
+	<CANPICK> ":" <NAME> "," (<BALOONS> | <CHIPS>)
+}
+
+void canmoveindir()
+{}
+{
+	<CANMOVEINDIR> ":" <NAME> "," (<NORTH>|<SOUTH>|<EAST>|<WEST>)
+}
+
+void canjumpindir()
+{}
+{
+	<CANJUMPINDIR> ":" <NAME> "," (<NORTH>|<SOUTH>|<EAST>|<WEST>)
+}
+
+void canmovetothe()
+{}
+{
+	<CANMOVETOTHE> ":" <NAME> "," (<FRONT>|<RIGHT>|<LEFT>|<BACK>)
+}
+
+void canjumptothe()
+{}
+{
+	<CANJUMPTOTHE> ":" <NAME> "," (<FRONT>|<RIGHT>|<LEFT>|<BACK>)
+}
+
+void not()
+{}
+{
+	<NOT> ":" condition()
+}
+
+
+void loop ():
+{ }
+{
+	
+}
+void repeat ():
+{ }
+{
 	
 }
 
-*/
+void call ():
+{ }
+{
+	"[" instructions() "]"
+}
+
+

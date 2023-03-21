@@ -1,0 +1,54 @@
+S0 ::= "ROBOT_R" <BODY>
+BODY ::= <VARS> <PROCS> <BLOCKS>
+VARS ::= "VARS" (<NAME>","<NAME>|<NAME>)+
+PROCS ::= "PROCS" <DEFINITION>
+BLOCK ::= "[" <INSTRUCTIONS> "]"
+
+DEFINITION ::= "[" "|" <PARAMS> "|" <INSTRUCTIONS> "]"
+PARAMS ::= (<NAME> "," <NAME> | <NAME>)+
+INSTRUCTIONS ::= (<COMMAND> | <CONTROL> | <PROCEDURECALL>) | ((<COMMAND> | <CONTROL> | <PROCEDURECALL>) ";" <INSTRUCTIONS>)
+
+COMMAND -> assignto: N , NAME
+COMMAND -> goTo: X, X
+COMMAND -> put: X, OBJ
+COMMAND -> pick: X, OBJ
+COMMAND -> movetothe: X, DIR
+COMMAND -> moveindir: X , OTN
+COMMAND -> jumptothe: X , DIR
+COMMAND -> jumpindir: X , OTN
+COMMAND -> move: X
+COMMAND -> turn: D
+COMMAND -> face: OTN
+COMMAND -> nop: 
+
+N -> [0-9]*
+X-> NAME  
+X -> N
+DIR -> front | right | left | back
+OTN -> north | south | east | west
+D -> left | right | around
+OBJ -> baloons | chips
+
+CONTROL -> CONDITIONAL | LOOP | REPEAT
+CONDITIONAL -> if: CONDITION then: BLOCK else: BLOCK
+LOOP -> while: CONDITION do: EXEC
+REPEAT -> repeat: X EXEC
+
+CONDITION ::= facing: OTN 
+CONDITION -> canPut: X , OBJ  
+CONDITION -> canPick: X , OBJ  
+CONDITION -> canMoveInDir: X , OTN 
+CONDITION -> canJumpInDir: X, OTN 
+CONDITION -> canMoveToThe: X , DIR 
+CONDITION -> canJumpToThe: X, DIR 
+CONDITION -> not: CONDITION 
+
+CALL -> NAME : ARGS
+ARGS -> ARG , ARGS
+ARGS -> ARG
+ARG -> X
+
+MAY ::= ["A"-"B"]
+MIN ::= ["a"-"b"]
+NUM ::= [1-9]
+NAME ::=(<MAY>|<MIN>)+ (<MAY>|<MIN>|<NUM>) 
